@@ -21,11 +21,12 @@ export default class PopularBattle extends React.Component{
   }
 
   saveStorage = (id)=>{
-    localStorage.setItem('favorites',id)  
+     localStorage.setItem('favorites',id)  
     var NewBattle = this.state.currentBattle + 2
     this.setState({
       currentBattle: NewBattle
     })
+    console.log(localStorage.getItem('favorites'))
     if(this.state.currentBattle>=this.state.movies.length-2){
       var newPage= this.state.page+1
       this.setState({
