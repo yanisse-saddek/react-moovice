@@ -13,7 +13,8 @@ export default class PopularBattle extends React.Component{
   }
   componentDidMount = ()=>{
     axios(`https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=123131ea405ceb7ba968916397a05764&page=${this.state.page}`).then(resultat=>{
-        this.setState({
+      console.log(this.state.page)   
+      this.setState({
         movies:resultat.data.results
         })
     })
@@ -21,7 +22,6 @@ export default class PopularBattle extends React.Component{
 
   saveStorage = (id)=>{
     localStorage.setItem('favorites',id)  
-    console.log(localStorage.getItem('favorites'))
     var NewBattle = this.state.currentBattle + 2
     this.setState({
       currentBattle: NewBattle
@@ -37,12 +37,11 @@ export default class PopularBattle extends React.Component{
   }
   render(){
     return(
-      <div>
+      <div class="d-flex justify-content-center">
         {
           this.state.movies.map((movie, index)=>{
             if(index<=this.state.currentBattle+1 && index>=this.state.currentBattle){
               var id = movie.id
-              console.log(this.state.currentBattle)
               return (
                 <div onClick={()=>{this.saveStorage(id)}}>
                   <Card data={movie}/>
@@ -55,3 +54,4 @@ export default class PopularBattle extends React.Component{
     )
   }
 }
+               
