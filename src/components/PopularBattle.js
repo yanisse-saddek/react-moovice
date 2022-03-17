@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import Card from './Card'
+import "../App.css"
 
 export default class PopularBattle extends React.Component{
   constructor(props){
@@ -21,12 +22,13 @@ export default class PopularBattle extends React.Component{
   }
 
   saveStorage = (id)=>{
-     localStorage.setItem('favorites',id)  
+    var moviesList = [localStorage.getItem('favorites')]
+    moviesList.push(id)
+    localStorage.setItem('favorites',moviesList)  
     var NewBattle = this.state.currentBattle + 2
     this.setState({
       currentBattle: NewBattle
     })
-    console.log(localStorage.getItem('favorites'))
     if(this.state.currentBattle>=this.state.movies.length-2){
       var newPage= this.state.page+1
       this.setState({
@@ -39,6 +41,7 @@ export default class PopularBattle extends React.Component{
   render(){
     return(
       <div class="d-flex justify-content-center">
+        <div class="battle-movie">
         {
           this.state.movies.map((movie, index)=>{
             if(index<=this.state.currentBattle+1 && index>=this.state.currentBattle){
@@ -46,13 +49,16 @@ export default class PopularBattle extends React.Component{
               return (
                 <div onClick={()=>{this.saveStorage(id)}}>
                   <Card data={movie}/>
+
                 </div>
               )
             }
           })
         }
+        </div>
       </div>
     )
   }
 }
                
+
