@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import Card from './Card'
+import {getPopularMovies} from '../utils/network'
 import "../App.css"
 
 export default class PopularBattle extends React.Component{
@@ -13,18 +14,24 @@ export default class PopularBattle extends React.Component{
     }
   }
   componentDidMount = ()=>{
-    axios(`https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=123131ea405ceb7ba968916397a05764&page=${this.state.page}`).then(resultat=>{
-      console.log(this.state.page)   
+    var popularMovies = getPopularMovies()
+    var m = popularMovies.then(result=>{
       this.setState({
-        movies:resultat.data.results
-        })
+        movies:result.data.results,
+        ok:true
+      })
+      console.log(this.state.movies)      
     })
   }
 
   saveStorage = (id)=>{
-    var moviesList = [localStorage.getItem('favorites')]
-    moviesList.push(id)
-    localStorage.setItem('favorites',moviesList)  
+    
+    var moviesList = []
+    moviesList = JSON.parse(localStorage.getItem('favorites')) || []
+    if(moviesList.includes(id) == false){
+      moviesList.push(id)
+    }    localStorage.setItem('favorites', JSON.stringify(moviesList));
+
     var NewBattle = this.state.currentBattle + 2
     this.setState({
       currentBattle: NewBattle
@@ -47,7 +54,7 @@ export default class PopularBattle extends React.Component{
             if(index<=this.state.currentBattle+1 && index>=this.state.currentBattle){
               var id = movie.id
               return (
-                <div onClick={()=>{this.saveStorage(id)}}>
+                <div style={{margin:"10px"}}onClick={()=>{this.saveStorage(id)}}>
                   <Card data={movie}/>
 
                 </div>
