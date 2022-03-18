@@ -3,6 +3,9 @@ import Nav from './links/Nav'
 import Router from './router/Routes'
 import "./App.css"
 export default class App extends React.Component{
+  componentDidMount = ()=>{
+    localStorage.removeItem('favorites')
+  }
   render(){
     return(
       <div>

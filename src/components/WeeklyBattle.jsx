@@ -28,8 +28,7 @@ export default class PopularBattle extends React.Component{
 
   saveStorage = (id)=>{
     console.log(id)
-    var moviesList = []
-    moviesList = JSON.parse(localStorage.getItem('favorites'))
+    var moviesList = JSON.parse(localStorage.getItem('favorites')) || []
     if(moviesList.includes(id) == false){
       moviesList.push(id)
     }

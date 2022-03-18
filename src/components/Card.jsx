@@ -17,6 +17,7 @@ export default class Card extends React.Component{
         
         return(
             <div className="card">
+                {this.props.onClick?<p onClick={()=>{this.props.onClick(this.props.data)}}>retirer</p>:null}
                 <img src={`https://image.tmdb.org/t/p/w300/${this.props.data.poster_path}`}/>
                 <div className="card-body">
                     <p className="card-title">{this.props.data.original_title}</p>
